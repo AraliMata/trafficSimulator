@@ -10,6 +10,7 @@ import networkx as nx
 import random
 import numpy as np
 
+jsonString = "["
 
 #Agent definition
 class Vehicle(ap.Agent):
@@ -239,6 +240,13 @@ class ControlModel(ap.Model):
         count += 1
       
       stringJSON += '], "DeletedCars": [' + ','.join(self.idRemovedVehicles) + ']}'
+      
+
+      if model.t != self.p.steps:
+        jsonString += stringJSON + ","
+      else:
+        jsonString += stringJSON + "]"
+
       return stringJSON
      
 
@@ -254,6 +262,7 @@ parameters = {
 
 
 
-model = ControlModel(parameters).run()
-
+def get_jsonString():
+  model = ControlModel(parameters).run()
+  return jsonString
 
