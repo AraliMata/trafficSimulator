@@ -266,7 +266,7 @@ def root():
     global jsonString
     ControlModel(parameters).run(display = False)
     temp = jsonString[0:-1] + "]"
-    return json.loads(temp)
+    return temp
     #return jsonify([{"message":"Pruebas Tec, from IBM Cloud!"}])
 
 if __name__ == '__main__':
