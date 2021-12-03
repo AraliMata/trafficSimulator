@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import json, logging, os, atexit
 import agentpy as ap
 import random
+import json
 import numpy as np
 
 
@@ -244,13 +245,9 @@ class ControlModel(ap.Model):
           stringJSON += ","
         count += 1
       
-      stringJSON += '], "DeletedCars": [' + ','.join(self.idRemovedVehicles) + ']}'
-
-      if self.model.t != self.p.steps-1:
-        jsonString += stringJSON + ","
-      else:
-        jsonString += stringJSON + "]"
+      stringJSON += '], "DeletedCars": [' + ','.join(self.idRemovedVehicles) + ']},'
       
+      jsonString += stringJSON
       return stringJSON
 
 
@@ -266,8 +263,10 @@ parameters = {
 
 @app.route('/')
 def root():
+    global jsonString
     ControlModel(parameters).run(display = False)
-    return jsonify(jsonString)
+    temp = jsonString[0:-1] + "]"
+    return json.loads(temp)
     #return jsonify([{"message":"Pruebas Tec, from IBM Cloud!"}])
 
 if __name__ == '__main__':
