@@ -274,7 +274,7 @@ port = int(os.getenv('PORT', 8000))
 
 @app.route('/')
 def root():
-    model = ControlModel(parameters).run()
+    #model = ControlModel(parameters).run()
     return jsonify(jsonString)
     #return jsonify([{"message":"Pruebas Tec, from IBM Cloud!"}])
 
